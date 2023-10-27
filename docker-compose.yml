@@ -1,0 +1,24 @@
+version: '3.7'
+
+services:
+  server:
+    build:
+      dockerfile: server.Dockerfile
+    environment:
+      SERVER_HOST: "0.0.0.0"
+      SERVER_PORT: '3131'
+    ports:
+      - '3131:3131'
+    image: pow-server:latest
+    restart: 'no'
+
+  client:
+    build:
+      dockerfile: client.Dockerfile
+    environment:
+      SERVER_HOST: "server"
+      SERVER_PORT: '3131'
+    image: pow-client:latest
+    restart: 'no'
+    depends_on:
+      - server
